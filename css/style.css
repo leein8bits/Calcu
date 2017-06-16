@@ -1,0 +1,67 @@
+#base{
+  margin:auto;
+  background-color:grey;
+  height:600px;
+  width:450px;
+}
+#screen{
+  display:inline-block;
+  margin:50px 50px 50px 50px ;
+  text-align:right;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align:-40px;
+  background-color:darkgrey;
+  height:100px;
+  width:350px;
+  font-size: 40px;
+}
+
+
+
+#equals{
+  background-color:darkgrey;
+  height:125px;
+  width:80px;
+ 
+}
+.button{
+   background-color:black;
+  height:50px;
+  width:80px;
+  display:inline-block;
+  
+   margin:5px 5px 5px 5px;
+  color:white;
+  text-align:center;
+ 
+ 
+}
+
+.flex-container {
+  /* We first create a flex layout context */
+  display: flex;
+  width:400px;
+  height:350px;
+  margin:auto;
+  /* Then we define the flow direction and if we allow the items to wrap 
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+ 
+  
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+}
+.parent {
+  display: flex;
+  height: 400px; /* Or whatever */
+  width:400px;
+}
+
+.child {
+ 
+  
+}
