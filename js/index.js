@@ -29,15 +29,59 @@ var total;
 var currentOp ;
 var holdingNum;
 var lastCalc = calcBuffer[calcBuffer.length-1];
+
+
+// new addtions 
+var curNumBuf;
+var curOpBuf;
+var calcBuf =[];
+var strungCB;
+
+
 function idMe(e) {
     var target = (e.target) ? e.target : e.srcElement;
-    buffer.push(target.innerHTML);
-    bufferStrung=buffer.join('');
-    document.getElementById("screen").innerHTML=bufferStrung;
+   
+    
     test();
    curNum = bufferStrung;
+   curNumBuf= numNum(curNumBuf, target.innerHTML);
+   
+   prtCur(curNumBuf);
+
+
+
 
 }
+ function numNum(cnb,string){
+         if(cnb==void 0){
+                 cnb= string;
+
+         }else if( cnb != void 0){
+                 cnb= cnb.concat(string);
+         }
+         return cnb;
+ }
+
+ function prtCur(string){
+         var cnb='';
+         strungCB = calcBuf.join('');
+         if(curNumBuf!= void 0){
+                 cnb = curNumBuf;
+
+         }
+         document.getElementById("screen").innerHTML=string + "<div id='calc_screen'>" + strungCB + cnb + "</div>";
+         
+ }
+function setOp(last,string){
+        if(!isNaN(last)){
+                return string;
+        }else{
+                return false;
+        }
+}
+
+
+
 function equalsBut(){
         if(calcBuffer.length===1){
         calcBuffer.push(currentOp);
@@ -77,7 +121,7 @@ function equalsBut(){
 }
 
 // hold num1 and num2  and have a function for each operator to do the work
-function addBut(){
+/*function addBut(){
         if(holdingNum!= void 0){
                 holdingNum = void 0;
         }
@@ -99,6 +143,24 @@ console.log("operator was changed to +");
 currentOp = "+";
 }
 }
+*/
+function operBut(e){
+        var target = (e.target) ? e.target : e.srcElement;
+        if(curNumBuf != void 0){
+                calcBuf.push(curNumBuf);
+                curNumBuf=void 0;
+                calcBuf.push(target.innerHTML);
+                prtCur(target.innerHTML);
+
+        }
+}
+
+
+    
+
+
+
+
 function divBut(){
         if(curNum!==void 0){
         calcBuffer.push(curNum);
