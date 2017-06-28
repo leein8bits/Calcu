@@ -36,41 +36,37 @@ var curNumBuf;
 var curOpBuf;
 var calcBuf =[];
 var strungCB;
+var currentTotal;
+var lastNum;
+var lastOp ="";
+var lastBut;
+
 
 
 function idMe(e) {
-    var target = (e.target) ? e.target : e.srcElement;
-   
-    
-    test();
-   curNum = bufferStrung;
-   curNumBuf= numNum(curNumBuf, target.innerHTML);
-   
-   prtCur(curNumBuf);
-
-
-
-
+  var target = (e.target) ? e.target : e.srcElement;
+  curNumBuf= numNum(curNumBuf, target.innerHTML);
+  prtCur(curNumBuf);
+  lastNum= curNumBuf;
 }
- function numNum(cnb,string){
+
+function numNum(cnb,string){
          if(cnb==void 0){
                  cnb= string;
-
          }else if( cnb != void 0){
                  cnb= cnb.concat(string);
          }
          return cnb;
  }
 
- function prtCur(string){
+function prtCur(string){ 
          var cnb='';
          strungCB = calcBuf.join('');
          if(curNumBuf!= void 0){
                  cnb = curNumBuf;
-
          }
+         test();
          document.getElementById("screen").innerHTML=string + "<div id='calc_screen'>" + strungCB + cnb + "</div>";
-         
  }
 function setOp(last,string){
         if(!isNaN(last)){
@@ -79,45 +75,44 @@ function setOp(last,string){
                 return false;
         }
 }
-
+function operBut(e){
+        var target = (e.target) ? e.target : e.srcElement;
+        if(curNumBuf != void 0){
+                calcBuf.push(curNumBuf);
+                curNumBuf=void 0;
+                calcBuf.push(target.innerHTML);
+                curOpBuf =(target.innerHTML);
+                lastOp=(target.innerHTML);
+                prtCur(target.innerHTML);
+                
+                console.log(lastOp);
+                lastBut=(target.HTML);
+test();
+        }
+}
 
 
 function equalsBut(){
-        if(calcBuffer.length===1){
-        calcBuffer.push(currentOp);
-        calcBuffer.push(holdingNum);
-        holdingNum= void 0;
-
-        totalString=calcBuffer.join('');
-        console.log(totalString.toString());
-        total = eval(totalString);
-        document.getElementById("screen").innerHTML=total;
-        calcBuffer =[];
-        bufferStrung =void 0;
+        if(lastBut==="="){
+                 console.log(currentTotal,lastOp, lastNum);
+                var redo =currentTotal+lastOp+lastNum;
+                 
+                currentTotal=eval(redo);
+                document.getElementById("screen").innerHTML=currentTotal + "answer";
+                curNumBuf= currentTotal;
+        }else{
+        var currentEval  ;
         
+       
+        currentTotal = eval(strungCB+curNumBuf );
+        document.getElementById("screen").innerHTML=currentTotal + "answer";
+        curNumBuf= currentTotal;
         
-        calcBuffer.push(total);
-        console.log("= button was spushed calcBuffer length ===1");
+        lastBut ="=";
         test();
+}
 
-}
-        if(calcBuffer.length>=2){
-        calcBuffer.push(curNum);                
-        totalString=calcBuffer.join('');
-        
-        total = eval(totalString);
-        console.log(totalString.toString()+ " = " + total);
-        document.getElementById("screen").innerHTML=total;
-        holdingNum = curNum;
-                calcBuffer= void 0;
-        calcBuffer =[];
-        calcBuffer.push(total);
-        console.log("= button was spushed cbl greater than 1");
-        test();
-        
-}
-   curNum=holdingNum;
-        
+ 
 }
 
 // hold num1 and num2  and have a function for each operator to do the work
@@ -144,21 +139,12 @@ currentOp = "+";
 }
 }
 */
-function operBut(e){
-        var target = (e.target) ? e.target : e.srcElement;
-        if(curNumBuf != void 0){
-                calcBuf.push(curNumBuf);
-                curNumBuf=void 0;
-                calcBuf.push(target.innerHTML);
-                prtCur(target.innerHTML);
 
-        }
-}
 
 
     
 
-
+/*
 
 
 function divBut(){
@@ -231,16 +217,12 @@ function clearBuffer(){
         bufferStrung= undefined;
 }
 
-/*Number.isNaN = Number.isNaN || function(value) {
+Number.isNaN = Number.isNaN || function(value) {
     return value !== value;
 }
 */
 function test(){
-        console.log("calcBuffer     "+ calcBuffer);
-        console.log("curNum         "+ curNum);
-        console.log("buffer         "+ buffer);
-        console.log("bufferStrung   "+ bufferStrung);
-        console.log("total          "+ total);
-        console.log("holdingNum     "+ holdingNum);
+        console.log("strungcb     "+ strungCB);
+       
 
 }
