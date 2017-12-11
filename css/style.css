@@ -20,8 +20,21 @@
   font-size: 20px;
 
 }
-
-
+#old{
+  background-color: lightblue;
+  height:35px;
+  width: 100px;
+}
+#op{
+  background-color: lightblue;
+  height:35px;
+  width: 100px;
+}
+#new{
+  background-color: lightblue;
+  height:35px;
+  width: 100px;
+}
 #equals{
   background-color:darkgrey;
   height:125px;
