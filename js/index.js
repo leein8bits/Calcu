@@ -1,184 +1,83 @@
-//onclick add button value to buffer array
-//buffer [] , hold the values and operaters in order
-//curentNum hold teh current number
-//lastNum hold last number for post equals
-//lastOper hold last operation for post equals
-// inPut holds the input to display
-// outPut holds the computed value for displaying
 
-/*
-functions
 
---canIOper(){
-is value at buffer.length-1 a number
-return T/F
-}
---bufferHas(){ -- use with canIOper 
-is buffer.length>0
-return T/F
-} 
+var curButt = "";
+var tempNum = "";
 
-*/
-//document.addEventListener("click", fnc);
-var opHolder; // holds +-*/ functions name to be called once = is pushed
-var buffer= [];
-var bufferStrung;
-var curNum; 
-var calcBuffer=[];
-var total;
-var currentOp ;
-var holdingNum;
-var lastCalc = calcBuffer[calcBuffer.length-1];
+
+var oldNum = "";
+var newNum = "";
+
+var op = "newProb";
+var newOp = "";
+
+
+
 function idMe(e) {
-    var target = (e.target) ? e.target : e.srcElement;
-    buffer.push(target.innerHTML);
-    bufferStrung=buffer.join('');
-    document.getElementById("screen").innerHTML=bufferStrung;
-    test();
-   curNum = bufferStrung;
+  var target = (e.target) ? e.target : e.srcElement;
+  curButt =  target.innerHTML;
+  newNum=newNum.concat(curButt);
+  display();
 
+
+  
+  document.getElementById("screen").innerHTML= "<div id='calc_screen'>" + newNum + "</div>";
+}
+// take number press and add to current number until a operator button is pressed.
+function display(){
+  document.getElementById("old").innerHTML= oldNum;
+  document.getElementById("op").innerHTML= op;
+  document.getElementById("new").innerHTML= newNum;
+}
+
+function opSet(check){
+     if(check ==="newProb"){
+       
+       
+       oldNum = newNum;
+       newNum="";
+     }
+     else{
+       oldNum = opSort(oldNum,op,newNum);
+       // remove next line once equals button works
+
+        
+
+     }
+}
+function opSort(oldN,op,newN){
+var o = Number(oldN);
+var n = Number(newN);
+var op= op;
+var mathed;
+switch(op){
+  case '+':
+  mathed= o+n;
+
+  break;
+  case "-":
+  mathed = o-n;
+  break;
+  case "*":
+  mathed = o*n;
+  break;
+  case "/":
+  mathed = o/n;
+  break;
+}
+oldNum=mathed;
+document.getElementById("screen").innerHTML= "<div id='calc_screen'>" + oldNum + "</div>";
+return mathed;
 }
 function equalsBut(){
-        if(calcBuffer.length===1){
-        calcBuffer.push(currentOp);
-        calcBuffer.push(holdingNum);
-        holdingNum= void 0;
-
-        totalString=calcBuffer.join('');
-        console.log(totalString.toString());
-        total = eval(totalString);
-        document.getElementById("screen").innerHTML=total;
-        calcBuffer =[];
-        bufferStrung =void 0;
-        
-        
-        calcBuffer.push(total);
-        console.log("= button was spushed calcBuffer length ===1");
-        test();
+  opSort(oldNum,op,newNum)
 
 }
-        if(calcBuffer.length>=2){
-        calcBuffer.push(curNum);                
-        totalString=calcBuffer.join('');
-        
-        total = eval(totalString);
-        console.log(totalString.toString()+ " = " + total);
-        document.getElementById("screen").innerHTML=total;
-        holdingNum = curNum;
-                calcBuffer= void 0;
-        calcBuffer =[];
-        calcBuffer.push(total);
-        console.log("= button was spushed cbl greater than 1");
-        test();
-        
-}
-   curNum=holdingNum;
-        
-}
+function operBut(e){
+        var target = (e.target) ? e.target : e.srcElement;
+       op = target.innerHTML;
+       display();
+       document.getElementById("screen").innerHTML= "<div id='calc_screen'>" + op + "</div>";
+       opSet(op);
+       newNum="";
 
-// hold num1 and num2  and have a function for each operator to do the work
-function addBut(){
-        if(holdingNum!= void 0){
-                holdingNum = void 0;
         }
-        if(curNum!==void 0){
-        calcBuffer.push(curNum);
-        calcBuffer.push('+');
-       
-        document.getElementById("screen").innerHTML="+";
-        clearBuffer();
-        console.log("add button was spushed");
-        test();
-        currentOp = "+";
-}
- if(curNum===void 0 && isNaN(calcBuffer[calcBuffer.length-1])){ // so we can change operator
-
-calcBuffer.splice(-1,1);
-calcBuffer.push('+');
-console.log("operator was changed to +");
-currentOp = "+";
-}
-}
-function divBut(){
-        if(curNum!==void 0){
-        calcBuffer.push(curNum);
-        calcBuffer.push('/');
-       
-        document.getElementById("screen").innerHTML="/";
-        clearBuffer();
-        console.log("div button was spushed");
-        test();
-        currentOp = "/";
-}
-if(curNum===void 0 && calcBuffer.length>0){ // so we can change operator
-
-calcBuffer.splice(-1,1);
-calcBuffer.push('/');
-console.log("operator was changed to /");
-currentOp = "/";
-
-}
-}
-function minusBut(){
-        if(holdingNum){
-                holdingNum=void 0;
-                calcBuffer.push('-');
-        }
-       else if(curNum!==void 0){
-        calcBuffer.push(curNum);
-        calcBuffer.push('-');
-       
-        document.getElementById("screen").innerHTML="-";
-        clearBuffer();
-        console.log("minus button was spushed");
-        test();
-        currentOp = "-";
-}
- else if(curNum===void 0 && calcBuffer.length>0){ // so we can change operator
-
-calcBuffer.splice(-1,1);
-calcBuffer.push('-');
-console.log("operator was changed to -");
-currentOp = "-";
-
-}
-}
-function multiBut(){
-        if(curNum!==void 0){
-        calcBuffer.push(curNum);
-        calcBuffer.push('*');
-       
-        document.getElementById("screen").innerHTML="*";
-        clearBuffer();
-        console.log("times button was spushed");
-        test();
-        currentOp = "*";
-}
- if(curNum===void 0 && calcBuffer.length>0){ // so we can change operator
-
-calcBuffer.splice(-1,1);
-calcBuffer.push('*');
-console.log("operator was changed to *");
-currentOp = "*";
-
-}
-}
-function clearBuffer(){
-        curNum= undefined;
-        buffer = [];
-        bufferStrung= undefined;
-}
-
-/*Number.isNaN = Number.isNaN || function(value) {
-    return value !== value;
-}
-*/
-function test(){
-        console.log("calcBuffer     "+ calcBuffer);
-        console.log("curNum         "+ curNum);
-        console.log("buffer         "+ buffer);
-        console.log("bufferStrung   "+ bufferStrung);
-        console.log("total          "+ total);
-        console.log("holdingNum     "+ holdingNum);
-
-}
