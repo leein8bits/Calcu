@@ -1,24 +1,21 @@
-
-
-
-
 var oldNum = "newProb";
 var newNum = "";
-
-var op = "+";
+var eqBool = false;
+var op = "";
 var newOp = "";
-
-
+var opBool =false;
 
 function idMe(e) {
   var target = (e.target) ? e.target : e.srcElement;
-
+  if (eqBool){
+    //allClear();
+    eqBol=false;
+    opBool=false;
+  }
   newNum = newNum.concat(target.innerHTML);
   display();
-
-
-
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + newNum + "</div>";
+  opBool=false;
 }
 
 function display() {
@@ -31,12 +28,12 @@ function opSet(check) {
   if (check === "newProb") {
     oldNum = newNum;
     newNum = "";
-  }
-  else {
+    return;
+  } else if (eqBool) {} else {
     oldNum = opSort(oldNum, op, newNum);
-    
   }
 }
+
 function opSort(oldN, op, newN) {
   var o = Number(oldN);
   var n = Number(newN);
@@ -55,31 +52,33 @@ function opSort(oldN, op, newN) {
     case "/":
       mathed = o / n;
       break;
-      
+
   }
-
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + mathed + "</div>";
-  newNum = "";
-  return mathed;
+  // newNum = "";
+  return mathed.toFixed(6);
 }
-function equalsBut() {
-  opSort(oldNum, op, newNum)
-   oldNum = "newProb";
-  newNum = "";
-  op = "+";
-  newOp = "";
 
+function equalsBut() {
+  newOp = op;
+  oldNum = opSort(oldNum, op, newNum);
+  //newNum = "";
+  //op = "+";
+  op = newOp;
+  display();
+  eqBool=true;
 }
+
 function operBut(e) {
   var target = (e.target) ? e.target : e.srcElement;
-  op = target.innerHTML;
+  
   opSet(oldNum);
   display();
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + op + "</div>";
-
   newNum = "";
-
+  opBool=true;
 }
+
 function allClear() {
   oldNum = "newProb";
   newNum = "";
@@ -88,12 +87,14 @@ function allClear() {
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>0</div>";
   display();
 }
-function percent(){
-  var n = newNum*.1;
-  newNum = n.toFixed(6);
-}
-function clearNum(){
-  newNum ="";
-  document.getElementById("screen").innerHTML = "<div id='calc_screen'></div>";
 
+function percent() {
+  var n = newNum * .01;
+  newNum = n.toFixed(6);
+  display();
+}
+
+function clearNum() {
+  newNum = "";
+  document.getElementById("screen").innerHTML = "<div id='calc_screen'></div>";
 }
