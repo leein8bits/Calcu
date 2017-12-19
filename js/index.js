@@ -1,13 +1,14 @@
-var oldNum = "newProb";
+var oldNum = ""; // change to "newProb" if pancake
 var newNum = "";
 var eqBool = false;
 var op = "";
 var newOp = "";
-var opBool =false;
+var opBool = false;
 
 function idMe(e) {
   var target = (e.target) ? e.target : e.srcElement;
-  if (eqBool){
+  var tex =  (target.innerText || target.textContent);
+  /* if (eqBool){
     //allClear();
     eqBol=false;
     opBool=false;
@@ -16,7 +17,26 @@ function idMe(e) {
   display();
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + newNum + "</div>";
   opBool=false;
+*/
+  if (!oldNum && !newNum) {
+    newNum = tex;
+
+
+  } else if (newNum && !op) {
+    newNum = newNum.concat(tex);
+
+  } else if (newNum && op && oldNum) {
+    newNum = newNum.concat(tex);
+
+  } else if (newNum && op) {
+    oldNum = newNum;
+    newNum =  tex;
+
+
+  }
+  document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + newNum + "</div>";
 }
+
 
 function display() {
   document.getElementById("old").innerHTML = "oldNum" + oldNum;
@@ -60,41 +80,52 @@ function opSort(oldN, op, newN) {
 }
 
 function equalsBut() {
-  newOp = op;
-  oldNum = opSort(oldNum, op, newNum);
+  var done = "";
+
+  done = opSort(oldNum, op, newNum);
   //newNum = "";
-  //op = "+";
-  op = newOp;
-  display();
-  eqBool=true;
+  //op = "";
+  allClear();
+  var total = parseFloat(done);
+  document.getElementById("screen").innerHTML = "<div id 'calc_screen'>" + total + "</div>";
+
+  eqBool = true;
 }
 
 function operBut(e) {
   var target = (e.target) ? e.target : e.srcElement;
-  
-  opSet(oldNum);
+   var tex =  (target.innerText || target.textContent);
+  var answer = "";
+  /*opSet(oldNum);
   display();
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + op + "</div>";
   newNum = "";
-  opBool=true;
+  opBool=true; */
+
+  if (!op) {
+    op = tex;
+
+
+  } else if (newNum && op && oldNum) {
+    answer = opSort(oldNum, op, newNum);
+    newNum = answer;
+    op = tex;
+    oldNum = "";
+
+
+  } else if (newNum && op) {
+    op = tex;
+  }
+  document.getElementById("screen").innerHTML = "<div id='calc_screen'>" + op + "</div>";
+
+
 }
 
 function allClear() {
-  oldNum = "newProb";
+  oldNum = ""; // change to newProb if pancake
   newNum = "";
-  op = "+";
+  op = "";
   newOp = "";
   document.getElementById("screen").innerHTML = "<div id='calc_screen'>0</div>";
-  display();
-}
 
-function percent() {
-  var n = newNum * .01;
-  newNum = n.toFixed(6);
-  display();
-}
-
-function clearNum() {
-  newNum = "";
-  document.getElementById("screen").innerHTML = "<div id='calc_screen'></div>";
 }
