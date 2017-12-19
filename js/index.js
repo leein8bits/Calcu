@@ -23,14 +23,14 @@ function idMe(e) {
 
 
   } else if (newNum && !op) {
-    newNum = newNum.concat(tex);
+    newNum = newNum.concat(tex.trim());
 
   } else if (newNum && op && oldNum) {
-    newNum = newNum.concat(tex);
+    newNum = newNum.concat(tex.trim());
 
   } else if (newNum && op) {
     oldNum = newNum;
-    newNum =  tex;
+    newNum =  tex.trim();
 
 
   }
